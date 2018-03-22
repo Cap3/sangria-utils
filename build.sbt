@@ -18,7 +18,7 @@ lazy val root = (project in file(".")).
     libraryDependencies ++= Seq(
       scalaTest % Test,
       guice,
-      "org.sangria-graphql" %% "sangria" % "1.3.2",
+      "org.sangria-graphql" %% "sangria" % "1.4.0",
       "org.sangria-graphql" %% "sangria-play-json" % "1.0.4"
     ))
   .settings(publishingSettings: _*)
