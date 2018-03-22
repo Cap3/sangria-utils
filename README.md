@@ -10,7 +10,7 @@ build.sbt
 
 ```scala
 libraryDependencies ++= Seq(
-  "de-cap3" %% "sangria-utils" % "0.1-SNAPSHOT"
+  "de.cap3" %% "sangria-utils" % "0.1-SNAPSHOT"
 )
 ```
 
@@ -19,4 +19,3 @@ conf/application.conf
 ```
 play.modules.enabled += "de.cap3.sangria.SangriaModule"
 ```
-
