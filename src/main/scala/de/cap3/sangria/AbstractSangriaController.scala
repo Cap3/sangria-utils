@@ -1,6 +1,6 @@
 package de.cap3.sangria
 
-import de.cap3.sangria.AbstractGraphqlController.{AbstractContextFactory, GraphQlParams}
+import de.cap3.sangria.AbstractSangriaController.{AbstractContextFactory, GraphQlParams}
 import play.api.libs.Files
 import play.api.libs.json.{JsObject, JsString, JsValue, Json}
 import play.api.mvc._
@@ -13,7 +13,7 @@ import sangria.schema.Schema
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-object AbstractGraphqlController {
+object AbstractSangriaController {
 
   trait AbstractContextFactory[Ctx] {
     def create(eventualToken: Option[String] = None,
@@ -29,9 +29,9 @@ object AbstractGraphqlController {
 
 }
 
-abstract class AbstractGraphqlController[Ctx](cc: ControllerComponents,
+abstract class AbstractSangriaController[Ctx](cc: ControllerComponents,
                                               contextFactory: AbstractContextFactory[Ctx],
-                                              graphQlConfig: GraphQlConfig)
+                                              graphQlConfig: SangriaConfig)
                                              (implicit ec: ExecutionContext)
   extends AbstractController(cc) {
 
