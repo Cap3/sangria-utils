@@ -21,3 +21,13 @@ conf/application.conf
 ```
 play.modules.enabled += "de.cap3.sangria.SangriaModule"
 ```
+
+## <a class="anchor" name="getting-started"></a> Getting Started
+
+### Common Scalar Types
+
+To use the common scalar types, you have to add the following import:
+
+```scala
+import de.cap3.sangria.CommonSchema._
+```
