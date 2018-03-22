@@ -9,6 +9,8 @@ Utils and snippets for the sangria grapqhl library for scala.
 build.sbt
 
 ```scala
+resolvers += Resolver.sonatypeRepo("public")
+
 libraryDependencies ++= Seq(
   "de.cap3" %% "sangria-utils" % "0.1-SNAPSHOT"
 )
