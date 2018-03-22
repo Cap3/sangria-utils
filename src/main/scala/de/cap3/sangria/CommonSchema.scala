@@ -1,7 +1,8 @@
 package de.cap3.sangria
 
 import java.time.format.{DateTimeFormatter, DateTimeParseException}
-import java.time.{Instant, ZoneOffset}
+import java.time.{Instant, LocalDateTime, ZoneOffset}
+import java.util.UUID
 
 import play.api.libs.json.{JsValue, Json}
 import sangria.schema.{ScalarAlias, StringType}
@@ -26,6 +27,27 @@ object CommonSchema {
     toScalar = js => Json.prettyPrint(js),
     fromScalar = value => try Right(Json.parse(value)) catch {
       case _: Throwable => Left(JsValueViolation)
+    }
+  )
+
+  implicit val UnitType = ScalarAlias[Unit, String](StringType,
+    toScalar = _ => "",
+    fromScalar = _ => Right(()))
+
+  case object UuidViolation extends ValueCoercionViolation("Invalid UUID")
+
+  implicit val UuidType = ScalarAlias[UUID, String](StringType,
+    toScalar = _.toString,
+    fromScalar = idString => try Right(UUID.fromString(idString)) catch {
+      case _: IllegalArgumentException => Left(UuidViolation)
+    })
+
+  case object LocalDateTimeViolation extends ValueCoercionViolation("Invalid date")
+
+  implicit val LocalDateTimeType = ScalarAlias[LocalDateTime, String](StringType,
+    toScalar = _.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+    fromScalar = dateString => try Right(LocalDateTime.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE_TIME)) catch {
+      case _: DateTimeParseException => Left(LocalDateTimeViolation)
     }
   )
 }
