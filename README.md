@@ -12,7 +12,7 @@ build.sbt
 resolvers += Resolver.sonatypeRepo("public")
 
 libraryDependencies ++= Seq(
-  "de.cap3" %% "sangria-utils" % "0.1-SNAPSHOT"
+  "de.cap3" %% "sangria-utils" % "0.1"
 )
 ```
 
