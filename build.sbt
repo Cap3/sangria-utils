@@ -3,7 +3,7 @@ import Dependencies._
 val scalaVersion_2_11 = "2.11.11"
 val scalaVersion_2_12 = "2.12.4"
 
-val sangriaUtilsVersion = "0.1"
+val sangriaUtilsVersion = "0.1.1-SNAPSHOT"
 
 lazy val root = (project in file(".")).
   settings(
