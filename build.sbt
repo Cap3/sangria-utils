@@ -26,6 +26,7 @@ lazy val root = (project in file(".")).
 val publishingSettings = Seq(
   pomIncludeRepository := { _ => false },
   publishMavenStyle := true,
+  description := "Utils and snippets for the sangria grapqhl library for scala.",
   licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
   homepage := Some(url("https://github.com/Cap3/sangria-utils")),
   publishArtifact in Test := false,
@@ -44,7 +45,7 @@ val publishingSettings = Seq(
   ),
   developers := List(
     Developer(
-      id    = "cap3",
+      id    = "Cap3",
       name  = "Cap3 GmbH",
       email = "info@cap3.de",
       url   = url("http://www.cap3.de/")
