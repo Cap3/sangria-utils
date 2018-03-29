@@ -5,7 +5,7 @@ import java.time.{Instant, LocalDateTime, ZoneOffset}
 import java.util.UUID
 
 import play.api.libs.json.{JsValue, Json}
-import sangria.schema.{ScalarAlias, StringType}
+import sangria.schema.{IntType, ScalarAlias, StringType}
 import sangria.validation.ValueCoercionViolation
 
 import scala.language.implicitConversions
@@ -48,6 +48,15 @@ object CommonSchema {
     toScalar = _.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
     fromScalar = dateString => try Right(LocalDateTime.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE_TIME)) catch {
       case _: DateTimeParseException => Left(LocalDateTimeViolation)
+    }
+  )
+
+  case object ShortViolation extends ValueCoercionViolation("Invalid short")
+
+  implicit val ShortType = ScalarAlias[Short, Int](IntType,
+    toScalar = _.toInt,
+    fromScalar = intValue => try Right(intValue.toShort) catch {
+      case _: IllegalArgumentException => Left(ShortViolation)
     }
   )
 }
