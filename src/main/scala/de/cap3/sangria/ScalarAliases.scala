@@ -10,7 +10,7 @@ import sangria.validation.ValueCoercionViolation
 
 import scala.language.implicitConversions
 
-object CommonSchema {
+object ScalarAliases {
 
   case object InstantViolation extends ValueCoercionViolation("Invalid date")
 
