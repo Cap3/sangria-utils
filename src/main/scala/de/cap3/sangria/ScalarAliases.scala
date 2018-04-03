@@ -5,12 +5,12 @@ import java.time.{Instant, LocalDateTime, ZoneOffset}
 import java.util.UUID
 
 import play.api.libs.json.{JsValue, Json}
-import sangria.schema.{ScalarAlias, StringType}
+import sangria.schema.{IntType, ScalarAlias, StringType}
 import sangria.validation.ValueCoercionViolation
 
 import scala.language.implicitConversions
 
-object CommonSchema {
+object ScalarAliases {
 
   case object InstantViolation extends ValueCoercionViolation("Invalid date")
 
@@ -18,17 +18,15 @@ object CommonSchema {
     toScalar = _.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
     fromScalar = dateString => try Right(Instant.parse(dateString)) catch {
       case _: DateTimeParseException => Left(InstantViolation)
-    }
-  )
+    })
 
   case object JsValueViolation extends ValueCoercionViolation("Invalid Json")
 
-  implicit val JsonType = ScalarAlias[JsValue, String](StringType,
+  implicit val JsValueType = ScalarAlias[JsValue, String](StringType,
     toScalar = js => Json.prettyPrint(js),
     fromScalar = value => try Right(Json.parse(value)) catch {
       case _: Throwable => Left(JsValueViolation)
-    }
-  )
+    })
 
   implicit val UnitType = ScalarAlias[Unit, String](StringType,
     toScalar = _ => "",
@@ -48,6 +46,13 @@ object CommonSchema {
     toScalar = _.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
     fromScalar = dateString => try Right(LocalDateTime.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE_TIME)) catch {
       case _: DateTimeParseException => Left(LocalDateTimeViolation)
-    }
-  )
+    })
+
+  case object ShortViolation extends ValueCoercionViolation("Invalid short")
+
+  implicit val ShortType = ScalarAlias[Short, Int](IntType,
+    toScalar = _.toInt,
+    fromScalar = intValue => try Right(intValue.toShort) catch {
+      case _: IllegalArgumentException => Left(ShortViolation)
+    })
 }
