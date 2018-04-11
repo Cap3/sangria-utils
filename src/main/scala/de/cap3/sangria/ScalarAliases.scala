@@ -15,7 +15,7 @@ object ScalarAliases {
   case object InstantViolation extends ValueCoercionViolation("Invalid date")
 
   implicit val InstantType = ScalarAlias[Instant, String](StringType,
-    toScalar = _.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+    toScalar = _.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_ZONED_DATE_TIME),
     fromScalar = dateString => try Right(Instant.parse(dateString)) catch {
       case _: DateTimeParseException => Left(InstantViolation)
     })
