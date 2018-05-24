@@ -55,4 +55,12 @@ object ScalarAliases {
     fromScalar = intValue => try Right(intValue.toShort) catch {
       case _: IllegalArgumentException => Left(ShortViolation)
     })
+
+  case object ByteViolation extends ValueCoercionViolation("Invalid byte")
+
+  implicit val ByteType = ScalarAlias[Byte, Int](IntType,
+    toScalar = _.toInt,
+    fromScalar = intValue => try Right(intValue.toByte) catch {
+      case _: IllegalArgumentException => Left(ByteViolation)
+    })
 }
