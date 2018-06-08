@@ -5,7 +5,7 @@ import java.time.{Instant, LocalDateTime, ZoneOffset}
 import java.util.UUID
 
 import play.api.libs.json.{JsValue, Json}
-import sangria.schema.{IntType, ScalarAlias, StringType}
+import sangria.schema.{FloatType, IntType, ScalarAlias, StringType}
 import sangria.validation.ValueCoercionViolation
 
 import scala.language.implicitConversions
@@ -62,5 +62,13 @@ object ScalarAliases {
     toScalar = _.toInt,
     fromScalar = intValue => try Right(intValue.toByte) catch {
       case _: IllegalArgumentException => Left(ByteViolation)
+    })
+
+  case object FloatViolation extends ValueCoercionViolation("Invalid float")
+
+  implicit val SmallFloatType = ScalarAlias[Float, Double](FloatType,
+    toScalar = _.toDouble,
+    fromScalar = doubleValue => try Right(doubleValue.toFloat) catch {
+      case _: IllegalArgumentException => Left(FloatViolation)
     })
 }
